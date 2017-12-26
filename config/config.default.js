@@ -15,8 +15,8 @@ module.exports = appInfo => {
 
   config.mybank = {
     url: 'http://test.tc.mybank.cn/gop/gateway.do',
-    signUrl: 'http://localhost:8080/getSign'
-  }
+    signUrl: 'http://localhost:8080/getSign',
+  };
 
   config.sequelize = {
     dialect: 'postgres',
@@ -35,6 +35,6 @@ module.exports = appInfo => {
       db: '6',
     },
     agent: false,
-  }
+  };
   return config;
 };

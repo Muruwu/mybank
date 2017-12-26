@@ -6,22 +6,22 @@ const fs = require('fs');
 const path = require('path');
 
 function genSign(params, appSecret) {
-  const paramsStr = Object.keys(params).sort().map(key => key + '=' +  params[key])
+  const paramsStr = Object.keys(params).sort().map(key => key + '=' + params[key])
     .join(appSecret);
   // paramsStr = JSON.stringify(paramsStr).replace(/\//g, '\\/');
-  
+
   const privateKey = fs.readFileSync(path.join(__dirname, '../../config/mybank_private.pem')).toString();
   const sign = crypto.createSign('RSA-SHA1');
   sign.update(paramsStr, 'utf8');
 
-  return sign.sign(privateKey, 'base64'); //encodeURIComponent
+  return sign.sign(privateKey, 'base64'); // encodeURIComponent
 }
 
 function verifySign(params, signature) {
   const verify = crypto.createVerify('RSA-SHA1');
   const publicKey = fs.readFileSync(path.join(__dirname, '../../config/app_public_key.pem')).toString();
-  const paramStr = Object.keys(params).sort().map(key => key + '=' +  params[key])
-  .join('&');
+  const paramStr = Object.keys(params).sort().map(key => key + '=' + params[key])
+    .join('&');
   verify.update(paramStr);
 
   return verify.verify(publicKey, signature, 'base64');
@@ -42,8 +42,8 @@ function objectFilter(params, discardArr) {
   return filtered;
 }
 
-//获取天威参数签名
-async function getSign(ctx, params, appSecret='&', discardArr) {
+// 获取天威参数签名
+async function getSign(ctx, params, appSecret = '&', discardArr) {
   if (discardArr && !Array.isArray(discardArr)) {
     return new Error('invalid array params');
   }
@@ -54,21 +54,21 @@ async function getSign(ctx, params, appSecret='&', discardArr) {
       return obj;
     }, {});
 
-  let preStr = Object.keys(filtered).sort().map(key => key + '=' + params[key]).join(appSecret);
-
+  const preStr = Object.keys(filtered).sort().map(key => key + '=' + params[key])
+    .join(appSecret);
+  console.log('preStr: ' + preStr);
   const res = await ctx.curl(ctx.app.config.mybank.signUrl, {
     data: {
-      str: preStr
+      str: preStr,
     },
-    dataType: 'json'
+    dataType: 'json',
   });
-
-  return res
+  return res;
 }
 
 module.exports = {
   genSign,
   verifySign,
   objectFilter,
-  getSign
+  getSign,
 };

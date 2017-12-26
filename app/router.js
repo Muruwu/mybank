@@ -7,7 +7,7 @@ module.exports = app => {
   const { router, controller } = app;
   router.get('/', controller.home.index);
 
-  //账号管理
+  // 账号管理
   router.post('/getAccount', controller.account.getSubAccount);
 
   router.get('/query', controller.query.getSubAccount);

@@ -1,0 +1,1 @@
+MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCgNSDWnL3wziI1xaZjl++NZGxBaOHX8+VhCgjN4STTj0Li9IMGnh2ch4KnogE4DfQHWHrg+UJ9myF7CzaxEe7sm88qRZh5T2wqIMtepnxtliUBt8XsGw+utCdVhR4Y7n7Y8hLPqWjaRdHSy8NhB+wjY7M/7YgtUcIj2ZwLuT9dbwIDAQABaccount_type=BASIC&charset=UTF-8&partner_id=200001242399&service=mybank.tc.user.account.balance&uid=20171213574&version=2.0
