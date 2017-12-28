@@ -9,7 +9,9 @@ class HomeController extends Controller {
     const { ctx, app } = this;
     const result = await serialLib.getSerialNo(ctx);
 
-    ctx.body = result;
+    ctx.body = {
+      serialNo: result
+    };
   }
 }
 

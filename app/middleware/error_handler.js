@@ -1,34 +1,34 @@
 'use strict';
 const errorMapping = require('../lib/error_mapping');
 
-module.exports = (_, app) => {
-  return async next => {
+module.exports = (options, app) => {
+  return async (ctx, next) => {
     const params = {
-      ReqId: this.requestId,
+      ReqId: ctx.requestId,
       ErrorNo: 0,
       ErrorMsg: '',
     };
 
     try {
-      await next;
+      await next();
 
-      if (!this.body) {
-        throw new Error('null body');
+      if (!ctx.body) {
+        throw app.HttpNotFound('ServiceNotFound')
       }
     } catch (err) {
       const errObject = getErrorObj(err);
       [ params.ErrorNo, params.ErrorMsg ] = [ errObject.ErrorNo, errObject.ErrorMsg ];
 
       if (errObject.status) {
-        this.status = errObject.status;
+        ctx.status = errObject.status;
       }
     }
 
-    if (!this.body) {
-      this.body = {};
+    if (!ctx.body) {
+      ctx.body = {};
     }
 
-    Object.assign(this.body, params);
+    Object.assign(ctx.body, params);
   };
 };
 

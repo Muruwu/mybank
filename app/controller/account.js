@@ -6,7 +6,7 @@ class accountController extends Controller {
   async getSubAccount() {
     const { ctx, service } = this;
     const params = ctx.request.body;
-
+    
     const result = await service.account.addAccount(params);
     ctx.body = result;
     ctx.status = 200;

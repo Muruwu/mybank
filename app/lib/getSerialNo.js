@@ -5,12 +5,12 @@ exports.getSerialNo = async (ctx, type) => {
 
   const redisKey = type || 'incr#mybank';
 
-  const incrNo = await ctx.app.redis.get(type);
+  let incrNo = await ctx.app.redis.get(redisKey);
   if (!incrNo) {
-    await ctx.app.redis.set(type, 10000, 'EX', 60 * 60 * 24);
-    incrNo = 10000;
+    incrNo = 10001;
+    await ctx.app.redis.set(redisKey, 10001, 'EX', 60 * 60 * 24);
   }
-  await ctx.app.redis.incr(type);
+  await ctx.app.redis.incr(redisKey);
 
   return moment().format('YYYYMMDDhhmm') + incrNo;
 };
