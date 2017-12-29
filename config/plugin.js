@@ -14,5 +14,9 @@ module.exports = {
     httperror: {
         enable: true,
         package: '@yunding/egg-httperror',
-      },
+    },
+    validate: {
+        enable: true,
+        package: 'egg-validate'
+    }
 }

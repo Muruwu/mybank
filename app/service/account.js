@@ -5,6 +5,7 @@
 
 const Service = require('egg').Service;
 const signHelper = require('../lib/sign');
+const serialLib = require('../lib/getSerialNo');
 
 class AccountService extends Service {
   async addAccount(params) {
@@ -25,14 +26,15 @@ class AccountService extends Service {
     });
     result.params = params;
     // 插入一条记录， 并返回信息
-    // const insertOne = await this.ctx.model.Account.addAccount({
-    //     clientName: params.clientName,
-    //     mobile: params.mobile,
-    //     //bankAccount:
-    //     //bankAccountName
-    // })
+    const seqNo = await serialLib.getSerialNo(this.ctx);
+    const insertOne = await this.ctx.model.Account.addAccount({
+        clientName: params.enterprise_name,
+        clientId: seqNo,
+        //bankAccount:
+        //bankAccountName
+    })
     // 返回账号信息和创建结果
-    return result.data;
+    return result.data
   }
 
   async getAccountList(params) {

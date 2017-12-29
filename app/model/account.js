@@ -27,7 +27,7 @@ module.exports = app => {
   });
 
   Account.addAccount = async function(record) {
-    record.clientId = uuid();
+    // record.clientId = uuid();
     return await this.create(record);
   };
 
